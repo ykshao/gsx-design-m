@@ -57,9 +57,9 @@ define(function (require) {
     }
 
     function Env() {
-        utilBase.extend(this, env);
+        utilBase.deepCopy(this, env);
         Object.defineProperty(this, 'app', {
-            get: util_function.lazyConst(function () {
+            get: utilFunction.lazyConst(function () {
                 return parseGSXApp();
             }),
             enumerable: !0

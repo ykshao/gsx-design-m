@@ -14,6 +14,7 @@
 ---
 * jquery
 * artTemplate
+* iscroll
 
 ## 目录说明
 ---

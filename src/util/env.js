@@ -4,7 +4,7 @@
 define(function (require) {
     'use strict';
 
-    var util_function = require('util/function');
+    var utilFunction = require('util/function');
 
     var createVersion = (function () {
         function compare(ver1, ver2) {
@@ -53,10 +53,10 @@ define(function (require) {
         }
 
         Version.prototype = {
-            'toString': function () {
+            toString: function () {
                 return this.val;
             },
-            'valueOf': function () {
+            valueOf: function () {
                 var arr = this.val.split(".");
                 var b = [];
                 var i = 0;
@@ -250,21 +250,21 @@ define(function (require) {
 
     function Env() {
         Object.defineProperty(this, "browser", {
-            get: util_function.lazyConst(function () {
+            get: utilFunction.lazyConst(function () {
                 return parse_browser();
             }),
             enumerable: !0
         });
 
         Object.defineProperty(this, "os", {
-            get: util_function.lazyConst(function () {
+            get: utilFunction.lazyConst(function () {
                 return parse_os();
             }),
             enumerable: !0
         });
 
         Object.defineProperty(this, "thirdapp", {
-            get: util_function.lazyConst(function () {
+            get: utilFunction.lazyConst(function () {
                 return parse_thirdApp();
             }),
             enumerable: !0
@@ -286,7 +286,7 @@ define(function (require) {
             enumerable: !0
         });
 
-        this.toString = this.valueOf = util_function.lazyConst(function () {
+        this.toString = this.valueOf = utilFunction.lazyConst(function () {
             var str = [];
             str.push(this.os.name + '_' + this.os.version.toString());
             str.push(this.browser.name + '_' + this.browser.version.toString());

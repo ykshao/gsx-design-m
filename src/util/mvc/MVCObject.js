@@ -2,12 +2,13 @@
  * Created by gsx on 15/4/21.
  */
 define(function (require) {
+    'use strict';
 
-    var util_string = require('util/string');
+    var utilString = require('../string');
     var observer = require('./observer');
 
 
-    var initcap = util_string.initcap;
+    var initcap = utilString.initcap;
 
     /**
      * 实现 KVO 的基类。
@@ -23,13 +24,14 @@ define(function (require) {
      * @return 键对应的值
      */
     p.get = function (key) {
-        var __o_accessors_ = _get_accessors(this)[key];
+        var __o_accessors_ = _getAccessors(this)[key];
         if (__o_accessors_) {
             key = __o_accessors_.targetKey;
             __o_accessors_ = __o_accessors_.target;
             var getterName = getGetterName(key);
-            return __o_accessors_[getterName] ? __o_accessors_[getterName]() : __o_accessors_.get(key)
-        } else return this[key]
+            return __o_accessors_[getterName] ? __o_accessors_[getterName]() : __o_accessors_.get(key);
+        }
+        return this[key];
     };
 
     /**
@@ -39,7 +41,7 @@ define(function (require) {
      * @param {*} value 键对应的值
      */
     p.set = function (key, value) {
-        var __o_accessors_ = _get_accessors(this);
+        var __o_accessors_ = _getAccessors(this);
         if (__o_accessors_.hasOwnProperty(key)) {
             var accessor = __o_accessors_[key];
             var targetKey = accessor.targetKey;
@@ -47,11 +49,6 @@ define(function (require) {
             var setterName = getSetterName(targetKey); //setKey
             target[setterName] ? target[setterName](value) : target.set(targetKey, value)
         } else {
-            //var oldValue = this[key];
-            //如果不是引用对象类型，判断值是否相等
-            /* if(value && oldValue && value.equals && value.equals(oldValue) || oldValue === value){
-             return null;
-             }*/
             this[key] = value;
             _changed(this, key);
         }
@@ -63,11 +60,11 @@ define(function (require) {
      * @param {string} key 键值字符串
      */
     p.notify = function (key) {
-        var __o_accessors_ = _get_accessors(this);
+        var __o_accessors_ = _getAccessors(this);
         if (__o_accessors_.hasOwnProperty(key)) {
             var accessor = __o_accessors_[key];
-            accessor.target.notify(accessor.targetKey)
-        } else _changed(this, key)
+            accessor.target.notify(accessor.targetKey);
+        } else _changed(this, key);
     };
 
     /**
@@ -78,7 +75,8 @@ define(function (require) {
     p.setValues = function (values) {
         for (var key in values) {
             if (values.hasOwnProperty(key)) {
-                var value = values[key], setterName = getSetterName(key);
+                var value = values[key];
+                var setterName = getSetterName(key);
                 this[setterName] ? this[setterName](value) : this.set(key, value);
             }
         }
@@ -88,7 +86,7 @@ define(function (require) {
     /**
      * 针对状态更改的常规处理程序。在派生类中覆盖此项，以处理任意状态更改。
      *
-     * @param {util_string} key 键值字符串
+     * @param {utilString} key 键值字符串
      */
     p.changed = function (key) {
 
@@ -106,18 +104,18 @@ define(function (require) {
         targetKey = targetKey || key;
         var _self = this;
         _self.unbind(key, true);
-        /*_get_bindings(_self)[key] = target[getChangeName(targetKey)] = function () {
+        /*_getBindings(_self)[key] = target[getChangeName(targetKey)] = function () {
          _changed(_self, key)
          };*/
-        _get_bindings(_self)[key] = observer.addListener(target, getChangeName(targetKey.toLowerCase()), function () {
-            _changed(_self, key)
+        _getBindings(_self)[key] = observer.addListener(target, getChangeName(targetKey.toLowerCase()), function () {
+            _changed(_self, key);
         });
-        _bindto(_self, key, target, targetKey, noNotify)
+        _bindto(_self, key, target, targetKey, noNotify);
     };
 
     p.bindsTo = function (keys, target, targetKeys, noNotify) {
-        //不做过多判断，默认使用的时数组类型
-        //keys = is_array(keys) ? keys: get_keys(keys);
+        // 不做过多判断，默认使用的时数组类型
+        // keys = is_array(keys) ? keys: get_keys(keys);
         targetKeys = targetKeys || [];
         for (var i = 0, len = keys.length; i < len; i++) {
             var targetKey = targetKeys[i] || null;
@@ -132,14 +130,14 @@ define(function (require) {
      * @param {boolean} [notClear = false] 是否清楚绑定的值
      */
     p.unbind = function (key, notClear) {
-        var lsnr = _get_bindings(this)[key];
+        var lsnr = _getBindings(this)[key];
         if (lsnr) {
-            delete _get_bindings(this)[key];
+            delete _getBindings(this)[key];
             observer.removeListener(lsnr);
             var value = notClear && this.get(key);
-            delete _get_accessors(this)[key];
+            delete _getAccessors(this)[key];
             if (notClear) {
-                this[key] = value
+                this[key] = value;
             } else {
                 _changed(this, key);
             }
@@ -153,7 +151,7 @@ define(function (require) {
     p.unbindAll = function (keys) {
         if (!keys) {
             keys = [];
-            var items = _get_bindings(this);
+            var items = _getBindings(this);
             for (var key in items) {
                 if (items.hasOwnProperty(key)) {
                     keys.push(key);
@@ -165,22 +163,22 @@ define(function (require) {
         }
     };
 
-    //返回一个单例对象,bindValues
-    function _get_accessors(mvc) {
+    // 返回一个单例对象,bindValues
+    function _getAccessors(mvc) {
         return mvc.__o_accessors_ || (mvc.__o_accessors_ = {});
     }
 
-    //属性发生了改变，触发事件attr_changed事件
+    // 属性发生了改变，触发事件attr_changed事件
     function _changed(mvc, key) {
-        var key_changed = getChangeName(key);
-        mvc[key_changed] ? mvc[key_changed]() : mvc.changed(key);
+        var keyChanged = getChangeName(key);
+        mvc[keyChanged] ? mvc[keyChanged]() : mvc.changed(key);
         var eventName = getChangeName(key.toLowerCase());
         observer.trigger(mvc, eventName);
     }
 
-    //绑定视图
+    // 绑定视图
     function _bindto(mvc, key, target, targetKey, noNotify) {
-        _get_accessors(mvc)[key] = {
+        _getAccessors(mvc)[key] = {
             'target': target,
             'targetKey': targetKey
         };
@@ -188,7 +186,7 @@ define(function (require) {
     }
 
     //用于绑定的属性,bindListeners
-    function _get_bindings(mvc) {
+    function _getBindings(mvc) {
         if (!mvc.__o_bindings_) mvc.__o_bindings_ = {};
         return mvc.__o_bindings_
     }

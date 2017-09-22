@@ -4,8 +4,8 @@
 define(function (require) {
     'use strict';
 
-    var util_base = require('util/base');
-    var util_function = require('util/function');
+    var utilBase = require('util/base');
+    var utilFunction = require('util/function');
 
     var env = require('util/env');
 
@@ -21,7 +21,7 @@ define(function (require) {
             doc.getElementsByTagName('head')[0].appendChild(styleElement);
         }
         var textNode = doc.createTextNode(strCss);
-        var token = util_base.getUid(textNode);
+        var token = utilBase.getUid(textNode);
         styleElement.appendChild(textNode);
         return token;
     };
@@ -44,7 +44,7 @@ define(function (require) {
          var chromeHack = type == 3 && (21 <= version && (platform == 1 || platform == 2 || platform == 3) || 18 <= version && platform == 4);
          */
         //htc butterfly s原生浏览器下，如果开启硬件加速，会没有高清效果
-        var isSupport = util_function.lazyConst(function () {
+        var isSupport = utilFunction.lazyConst(function () {
             var isIOS = env.os.isIOS;
             var isAndroid = env.os.isAndroid || env.os.isAndroidPad;
             var isAppleWebkit = env.browser.isAppleWebkit;

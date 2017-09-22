@@ -1,7 +1,7 @@
 /**
  * Created by gsx on 15/12/24.
  */
-define(function (require) {
+define(function () {
     'use strict';
 
     var math = {};
@@ -22,7 +22,7 @@ define(function (require) {
      * */
     math.computeDistance = (function () {
         var degreeToRadian = function (deg) {
-            return deg * (Math.PI / 180)
+            return deg * (Math.PI / 180);
         };
         var computeScaleBetween = function (a, b) {
             var c = degreeToRadian(a.lat);
@@ -35,7 +35,7 @@ define(function (require) {
         var EARTH_RADIUS = 6378136.49;
         return function (latlng1, latlng2, c) {
             return computeScaleBetween(latlng1, latlng2) * (c || EARTH_RADIUS);
-        }
+        };
     })();
 
     return math;

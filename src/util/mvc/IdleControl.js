@@ -1,15 +1,13 @@
 /**
  * Created by gsx on 15/6/26.
  */
-define(function (require, exports) {
-
+define(function (require) {
     'use strict';
 
-    var observer = require('common/mvc/observer');
-    var MVCObject = require('common/mvc/MVCObject');
-
-    var util_base = require('util/base');
-    var util_function = require('util/function');
+    var observer = require('./observer');
+    var MVCObject = require('./MVCObject');
+    var utilBase = require('../base');
+    var utilFunction = require('../function');
 
     /**
      * 控制当数值停止变化时触发事件
@@ -20,26 +18,26 @@ define(function (require, exports) {
     function IdleControl(duration) {
         this.duration = duration;
         this.timer = null;
-        this.set("idle", true);
+        this.set('idle', true);
     }
 
-    util_base.inherits(IdleControl, MVCObject);
+    utilBase.inherits(IdleControl, MVCObject);
 
     var p = IdleControl.prototype;
 
     p.input_changed = function () {
-        if (this.get("idle")) {
-            this.set("idle", false);
+        if (this.get('idle')) {
+            this.set('idle', false);
         }
         if (this.timer) {
             window.clearTimeout(this.timer);
         }
-        //todo 这里后面有时间最好优化一下，这样实现性能不是最优的
-        this.timer = window.setTimeout(util_function.bind(this.a, this), this.duration);
+        // todo 这里后面有时间最好优化一下，这样实现性能不是最优的
+        this.timer = window.setTimeout(utilFunction.bind(this.a, this), this.duration);
     };
     p.a = function () {
         this.timer = null;
-        this.set("idle", true);
+        this.set('idle', true);
     };
     p.idle_changed = function () {
         if (this.get('idle')) {

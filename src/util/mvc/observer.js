@@ -7,14 +7,14 @@ define(function (require) {
 
     var exports = {};
 
-    var util_base = require('util/base');
-    var util_array = require('util/array');
-    var util_object = require('util/object');
+    var utilBase = require('../base');
+    var utilArray = require('../array');
+    var utilObject = require('../object');
 
 
     var ie = false;
-    var is_empty = util_object.isEmpty;
-    var to_array = util_array.argsToArray;
+    var isEmpty = utilObject.isEmpty;
+    var toArray = utilArray.argsToArray;
 
     var _listeners = {};
     var _eventObjects = {};
@@ -59,8 +59,8 @@ define(function (require) {
      * @type boolean
      */
     exports.exist = function (instance, eventName) {
-        var listeners = _get_listeners(instance, eventName);
-        return listeners && !is_empty(listeners);
+        var listeners = _getListeners(instance, eventName);
+        return listeners && !isEmpty(listeners);
     };
 
     /**
@@ -70,7 +70,7 @@ define(function (require) {
      * @param {string} eventName 事件名称
      */
     exports.clearListeners = function (instance, eventName) {
-        var listeners = _get_listeners(instance, eventName);
+        var listeners = _getListeners(instance, eventName);
         for (var key in listeners) {
             if (listeners[key]) {
                 listeners[key].remove();
@@ -85,7 +85,7 @@ define(function (require) {
      * @param {Object} instance 事件侦听器
      */
     exports.clearInstanceListeners = function (instance) {
-        var listeners = _get_listeners(instance);
+        var listeners = _getListeners(instance);
         for (var key in listeners) {
             if (listeners[key]) {
                 listeners[key].remove();
@@ -101,8 +101,8 @@ define(function (require) {
      */
     exports.trigger = function (instance, eventName) {
         if (exports.exist(instance, eventName)) {
-            var args = to_array(arguments, 2);
-            var listeners = _get_listeners(instance, eventName);
+            var args = toArray(arguments, 2);
+            var listeners = _getListeners(instance, eventName);
             for (var key in listeners) {
                 if (listeners[key]) {
                     listeners[key].handler.apply(listeners[key].instance, args);
@@ -122,7 +122,7 @@ define(function (require) {
     exports.addListenerOnce = function (instance, eventName, handler) {
         var eventListener = exports.addListener(instance, eventName, function () {
             eventListener.remove();
-            return handler.apply(this, arguments)
+            return handler.apply(this, arguments);
         });
         return eventListener;
     };
@@ -137,7 +137,7 @@ define(function (require) {
      * @type EventListener
      */
     exports.forward = function (instance, eventName, object) {
-        return exports.addListener(instance, eventName, _forward_event(eventName, object))
+        return exports.addListener(instance, eventName, _forwardEvent(eventName, object))
     };
 
     /**
@@ -159,11 +159,12 @@ define(function (require) {
 
     exports.addDomListener = function (element, eventName, handle, useOriginalEvent) {
         var token = {
-            'element': element,
-            'handle': handle,
-            'type': eventName
+            element: element,
+            handle: handle,
+            type: eventName
         };
-        var eventID = token.eid = util_base.getUid(token);
+        var eventID = utilBase.getUid(token);
+        token.eid = eventID;
         $(element).on(eventName + '.' + eventID, function (evt) {
             handle.call(this, useOriginalEvent ? (evt.originalEvent || evt) : evt);
         });
@@ -202,7 +203,7 @@ define(function (require) {
         }
     }
 
-    var eid = 0; //事件id
+    var eid = 0; // 事件id
 
     EventListener.prototype.remove = function () {
         var instance = this.instance;
@@ -210,14 +211,15 @@ define(function (require) {
         if (instance) {
             delete _get_event_list(instance, eventName)[this.id];
             if (instance.__events_) {
-                if (is_empty(instance.__events_[eventName])) {
+                if (isEmpty(instance.__events_[eventName])) {
                     delete instance.__events_[eventName];
                 }
-                if (is_empty(instance.__events_)) {
+                if (isEmpty(instance.__events_)) {
                     delete instance.__events_;
                 }
             }
-            this.handler = this.instance = null;
+            this.handler = null;
+            this.instance = null;
             delete _listeners[this.id];
 
         }
@@ -253,7 +255,7 @@ define(function (require) {
     }
 
     //获取事件侦听器
-    function _get_listeners(instance, eventName) {
+    function _getListeners(instance, eventName) {
         var listeners;
         var events = {};
         if (ie) {
@@ -280,14 +282,15 @@ define(function (require) {
         return listeners;
     }
 
-    //转发并触发事件
-    function _forward_event(eventName, object) {
+    // 转发并触发事件
+    function _forwardEvent(eventName, object) {
         return function () {
-            for (var args = [object, eventName], len = arguments.length, i = 0; i < len; ++i) {
+            var args;
+            for (args = [object, eventName], len = arguments.length, i = 0; i < len; ++i) {
                 args.push(arguments[i]);
             }
             exports.trigger.apply(this, args);
-        }
+        };
     }
 
     return exports;

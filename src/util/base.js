@@ -1,7 +1,7 @@
 /**
  * Created by gsx on 15/12/24.
  */
-define(function (require) {
+define(function () {
     'use strict';
 
     var base = {};
@@ -17,7 +17,7 @@ define(function (require) {
         }
 
         Parent.prototype = parent.prototype;
-        child.prototype = new Parent;
+        child.prototype = new Parent();
     };
 
     base.getUid = (function () {
@@ -31,13 +31,13 @@ define(function (require) {
 
 
     base.isString = function (o) {
-        return '[object String]' == Object.prototype.toString.call(o);
+        return '[object String]' === Object.prototype.toString.call(o);
     };
     base.isNumber = function (o) {
-        return '[object Number]' == Object.prototype.toString.call(o) && isFinite(o);
+        return '[object Number]' === Object.prototype.toString.call(o) && isFinite(o);
     };
     base.isBoolean = function (o) {
-        return '[object Boolean]' == Object.prototype.toString.call(o);
+        return '[object Boolean]' === Object.prototype.toString.call(o);
     };
     base.isUndefined = function (o) {
         return typeof o === 'undefined';
@@ -52,20 +52,19 @@ define(function (require) {
         return Object.prototype.toString.apply(o) === '[object Object]';
     };
     base.isArray = function (o) {
-        return '[object Array]' == Object.prototype.toString.call(o);
+        return '[object Array]' === Object.prototype.toString.call(o);
     };
     base.isDom = (function () {
         if (base.isObject(window.HTMLElement)) {
             return function (o) {
                 return o instanceof HTMLElement;
-            }
-        } else {
-            return function (o) {
-                return o &&
-                    1 === o.nodeType &&
-                    base.isString(o.nodeName);
             };
         }
+        return function (o) {
+            return o &&
+                1 === o.nodeType &&
+                base.isString(o.nodeName);
+        };
     })();
     base.isZepto = function (o) {
         return window.$ && $.zepto && $.zepto.isZ(o);
@@ -74,7 +73,8 @@ define(function (require) {
      * 多个函数调用统一参数
      */
     base.union = function () {
-        var args = arguments, len = args.length;
+        var args = arguments;
+        var len = args.length;
         return function () {
             for (var i = 0; i < len; ++i) {
                 if (args[i].apply(this, arguments)) {
@@ -84,7 +84,8 @@ define(function (require) {
             return false;
         };
     };
-    function extend(target, source) {
+    
+    function copy(target, source) {
         if (!source) {
             return target;
         }
@@ -96,7 +97,7 @@ define(function (require) {
                 if (Array.isArray(source[key]) && !Array.isArray(target[key])) {
                     target[key] = [];
                 }
-                extend(target[key], source[key]);
+                copy(target[key], source[key]);
             } else if (source[key] !== undefined) {
                 target[key] = source[key];
             }
@@ -104,13 +105,13 @@ define(function (require) {
     }
     
     /**
-     * 继承，模拟$.extend深度拷贝，替代Object.assign，后者浅拷贝
+     * 继承，模拟$.copy深度拷贝，替代Object.assign，后者浅拷贝
      */
-    base.extend = function (target) {
+    base.deepCopy = function (target) {
         var args = [].slice.call(arguments, 1);
         
         args.forEach(function (arg) {
-            extend(target, arg);
+            copy(target, arg);
         });
         return target;
     };

@@ -5,6 +5,7 @@
 
 define(function (require, exports) {
     'use strict';
+    
     var $ = require('zepto');
     
     exports.init = function () {

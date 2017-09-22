@@ -1,8 +1,9 @@
 /**
  * localStorage操作
  */
-define(function (require) {
+define(function () {
     'use strict';
+
     return {
         // 默认采用localStorage方式
         storager: window.sessionStorage,
@@ -15,7 +16,7 @@ define(function (require) {
          * @param  {Function} callback 回调函数
          * @return {*}                 返回值
          */
-        get: function(key, callback) {
+        get: function (key, callback) {
             var result;
             if (this.storager[key]) {
                 result = this.storager.getItem(key);

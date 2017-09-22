@@ -23,11 +23,10 @@ define(function (require) {
 
         quartFix.before(tabSpace[0].outerHTML);
         var navBarTop = quartFix.offset().top;
-        var navBarHeight = quartFix.height();
+        navBarHeight = quartFix.height();
 
 
         function update() {
-
             var bodyHeight = $(document.body).height();
 
             // 显示fix的必要条件是：

@@ -1,7 +1,7 @@
 /**
  * Created by gsx on 15/12/24.
  */
-define(function (require) {
+define(function () {
     'use strict';
 
     var array = {};

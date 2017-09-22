@@ -2,7 +2,6 @@
  * Created by xuzheng on 15/8/22.
  */
 define(function (require) {
-
     'use strict';
 
     var MVCObject = require('../../util/mvc/MVCObject');
@@ -114,13 +113,13 @@ define(function (require) {
 
     function initMaskStyle(element) {
         $(element).css({
-            'position': 'fixed',
-            'left': 0,
-            'top': 0,
-            'bottom': 0,
-            'right': 0,
-            'z-index': 700,
-            'background-color': 'rgba(0,0,0,0.3)'
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: 700,
+            backgroundColor: 'rgba(0,0,0,0.3)'
         });
     }
 

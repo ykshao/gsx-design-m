@@ -10,11 +10,10 @@ define(function (require, exports) {
     var weixinRender = template.compile(require('text!./weixinMask.tpl'));
     var container = $('#page_main');
     var flagArray = ['share', 'open'];
-    var deviceRatio = window.devicePixelRatio;
 
     exports.openMask = function (flag) {
-        var MakeMask =  function (flag) {
-            this.flag = flag;
+        var MakeMask =  function (options) {
+            this.flag = options;
         };
 
         MakeMask.prototype.makeCanvas = function () {

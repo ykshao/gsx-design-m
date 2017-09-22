@@ -1,7 +1,7 @@
 /**
  * Created by gsx on 15/12/24.
  */
-define(function (require) {
+define(function () {
     'use strict';
 
     var string = {};
@@ -19,20 +19,20 @@ define(function (require) {
     })();
 
     string.trim = function (str) {
-        return str == null ? "" : String.prototype.trim.call(str)
+        return str == null ? '' : String.prototype.trim.call(str);
     };
     /**
      * 编码html特殊字符
      */
-    string.encodeHTML = function () {
-        var temp_dom = document.createElement('div');
+    string.encodeHTML = (function () {
+        var tempDom = document.createElement('div');
         return function (txt) {
-            var t = document.createTextNode(txt),
-                res = temp_dom.appendChild(t).parentNode.innerHTML;
-            temp_dom.innerHTML = "";
+            var t = document.createTextNode(txt);
+            var res = tempDom.appendChild(t).parentNode.innerHTML;
+            tempDom.innerHTML = '';
             return res;
-        }
-    }();
+        };
+    }());
 
     /**
      * 对字符串进行 HTML 解码

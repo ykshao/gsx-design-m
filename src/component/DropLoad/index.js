@@ -14,7 +14,7 @@
  */
 define(function (require) {
     // require('css-loader!./index.styl');
-    var env = require('util/env');
+    var env = require('../../util/env');
     
     function touchLoading() {
         var me = this;

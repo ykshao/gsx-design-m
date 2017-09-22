@@ -2,10 +2,11 @@
  * Created by gsx on 15/4/23.
  */
 define(function (require) {
+    'use strict';
 
     var MVCObject = require('./MVCObject');
     var event = require('./observer');
-    var util_base = require('util/base');
+    var utilBase = require('../base');
 
     /**
      * 一个易变的 MVC 数组。
@@ -20,10 +21,10 @@ define(function (require) {
      */
     function MVCArray(array) {
         this.elems = array || [];
-        this.set("length", this.elems.length);
+        this.set('length', this.elems.length);
     }
 
-    util_base.inherits(MVCArray, MVCObject);
+    utilBase.inherits(MVCArray, MVCObject);
     var p = MVCArray.prototype;
 
     /**
@@ -64,7 +65,7 @@ define(function (require) {
         var n = this.elems.length;
         if (i < n) {
             this.elems[i] = elem;
-            event.trigger(this, "set_at", i, currentItem);
+            event.trigger(this, 'set_at', i, currentItem);
         } else {
             for (var j = n; j < i; ++j) {
                 this.insertAt(j, void 0);
@@ -81,8 +82,8 @@ define(function (require) {
      */
     p.insertAt = function (i, elem) {
         this.elems.splice(i, 0, elem);
-        this.set("length", this.elems.length);
-        event.trigger(this, "insert_at", elem, i);
+        this.set('length', this.elems.length);
+        event.trigger(this, 'insert_at', elem, i);
     };
 
     /**
@@ -93,12 +94,12 @@ define(function (require) {
      * @type {*}
      */
     p.removeAt = function (i) {
-        var len = this.get("length");
+        var len = this.get('length');
         if (len > i) {
             var elem = this.elems[i];
             this.elems.splice(i, 1);
-            this.set("length", len - 1);
-            event.trigger(this, "remove_at", elem, i);
+            this.set('length', len - 1);
+            event.trigger(this, 'remove_at', elem, i);
             return elem;
         }
     };

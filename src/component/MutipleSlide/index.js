@@ -23,7 +23,7 @@ define(function (require) {
      * {param} {Array} mutipleArray 需要三列的数据
      * {param} {Function} callback 回调函数
      */
-    function MutipleSlide (options) {
+    function MutipleSlide(options) {
         this.dom = options.dom;
         this.mutipleArray = options.mutipleArray;
         this.callback = options.callback;
@@ -102,7 +102,7 @@ define(function (require) {
             there
                 .removeClass('unchoosed')
                 .addClass('choosed');
-            if(that.callback) {
+            if (that.callback) {
                 var promise = that.callback({
                     level: there.attr('data-array-type'),
                     id: there.attr('data-id'),
@@ -114,7 +114,7 @@ define(function (require) {
                         if (responese.callback) {
                             responese.callback();
                         }
-                        if(responese.position === 'middle') {
+                        if (responese.position === 'middle') {
                             that.reRenderData({
                                 position: 'right',
                                 arrays: []

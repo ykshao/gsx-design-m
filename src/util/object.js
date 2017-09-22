@@ -1,7 +1,7 @@
 /**
  * Created by gsx on 15/12/24.
  */
-define(function (require) {
+define(function () {
     'use strict';
 
     var object = {};
@@ -11,9 +11,9 @@ define(function (require) {
      * @author gsx
      * @date 2015.4.21
      * */
-    object.isEmpty = function (object) {
-        for (var p in object) {
-            if (object.hasOwnProperty(p)) {
+    object.isEmpty = function (obj) {
+        for (var p in obj) {
+            if (obj.hasOwnProperty(p)) {
                 return false;
             }
         }

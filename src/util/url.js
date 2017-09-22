@@ -1,18 +1,18 @@
 /**
  * Created by gsx on 16/1/13.
  */
-define(function (require, exports) {
+define(function () {
     'use strict';
 
-    var reg = new RegExp("^([a-z0-9-]+:)?[/]{2}(?:)?([^:/?#]+)(?:[:]([0-9]+))?([/][^?#;]*)?(?:[?]([^?#]*))?(#[^#]*)?$", "i");
+    var reg = new RegExp('^([a-z0-9-]+:)?[/]{2}(?:)?([^:/?#]+)(?:[:]([0-9]+))?([/][^?#;]*)?(?:[?]([^?#]*))?(#[^#]*)?$', 'i');
 
     function Url(strUrl) {
         var params = {};
         var hash = '';
 
-        Object.defineProperty(this, "params", {
+        Object.defineProperty(this, 'params', {
             set: function (newParams) {
-                if ("object" == typeof newParams) {
+                if ('object' === typeof newParams) {
                     for (var k in params) {
                         delete params[k];
                     }
@@ -26,23 +26,23 @@ define(function (require, exports) {
             },
             enumerable: !0
         });
-        Object.defineProperty(this, "search", {
+        Object.defineProperty(this, 'search', {
             set: function (url) {
-                if ("string" == typeof url) {
-                    if (0 == url.indexOf('?')) {
-                        url = url.substr(1)
+                if ('string' === typeof url) {
+                    if (0 === url.indexOf('?')) {
+                        url = url.substr(1);
                     }
-                    var items = url.split("&");
+                    var items = url.split('&');
                     for (var key in params) {
                         delete params[key];
                     }
                     for (var e = 0; e < items.length; e++) {
-                        var arr = items[e].split("=");
+                        var arr = items[e].split('=');
                         if (arr[0])
                             try {
-                                params[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1] || "");
+                                params[decodeURIComponent(arr[0])] = decodeURIComponent(arr[1] || '');
                             } catch (g) {
-                                params[arr[0]] = arr[1] || "";
+                                params[arr[0]] = arr[1] || '';
                             }
                     }
                 }
@@ -52,9 +52,9 @@ define(function (require, exports) {
                 for (var key in params) {
                     if (params[key]) {
                         try {
-                            arr.push(encodeURIComponent(key) + "=" + encodeURIComponent(params[key]));
+                            arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
                         } catch (ex) {
-                            arr.push(key + "=" + params[key]);
+                            arr.push(key + '=' + params[key]);
                         }
                     } else {
                         try {
@@ -64,16 +64,16 @@ define(function (require, exports) {
                         }
                     }
                 }
-                return arr.length ? "?" + arr.join("&") : "";
+                return arr.length ? '?' + arr.join('&') : '';
             },
             enumerable: !0
         });
-        Object.defineProperty(this, "hash", {
+        Object.defineProperty(this, 'hash', {
             set: function (str) {
                 if (str && str.indexOf('#') < 0) {
-                    str = "#" + str;
+                    str = '#' + str;
                 }
-                hash = str || "";
+                hash = str || '';
             },
             get: function () {
                 return hash;
@@ -82,19 +82,20 @@ define(function (require, exports) {
         });
 
         this.set = function (a) {
-            a = a || "";
+            a = a || '';
             var b;
             if (!(b = a.match(reg))) {
                 b = [];
-                console.error("Wrong uri scheme.");
+                console.error('Wrong uri scheme.');
             }
             this.protocol = b[1] || location.protocol;
-            this.hostname = this.host = b[2];
-            this.port = b[3] || "";
-            this.pathname = b[4] || "/";
-            this.search = b[5] || "";
-            this.hash = b[6] || "";
-            this.origin = this.protocol + "//" + this.hostname;
+            this.hostname = b[2];
+            this.host = b[2];
+            this.port = b[3] || '';
+            this.pathname = b[4] || '/';
+            this.search = b[5] || '';
+            this.hash = b[6] || '';
+            this.origin = this.protocol + '//' + this.hostname;
         };
 
         this.toString = function () {
@@ -119,7 +120,6 @@ define(function (require, exports) {
             this.set(strUrl.toString());
         }
     }
-
 
     return function (strUrl) {
         return new Url(strUrl || location.href);
