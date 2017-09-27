@@ -6,6 +6,7 @@ define(function (require) {
 
     var utilBase = require('../../util/base');
     var env = require('../../util/env');
+    var utilFunction = require('../../util/function');
 
     function parseGSXApp() {
         var UA_TEACHER = 'GenShuiXue-teacher';

@@ -42,7 +42,7 @@ define(function (require, exports) {
             if ($element.css('display') == 'none') {
                 return true;
             }
-            //todo 先检查宽高,如果为0再检查父元素
+            // todo 先检查宽高,如果为0再检查父元素
             var hiddenParentNodes = $element.parents(':hidden');
             if (hiddenParentNodes.length !== 0) {
                 for (var i = hiddenParentNodes.length - 1; i >= 0; i--) {
@@ -85,8 +85,8 @@ define(function (require, exports) {
 
         function aboveTheTop($element, $container) {
             var fold;
-            if (!$container || $container[0] == w) {
-                fold = $window.scrollTop()
+            if (!$container || $container[0] === w) {
+                fold = $window.scrollTop();
             } else {
                 fold = $container.offset().top;
             }

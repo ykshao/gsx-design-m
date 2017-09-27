@@ -4,7 +4,7 @@
 define(function (require) {
     'use strict';
 
-    var utilFunction = require('util/function');
+    var utilFunction = require('./function');
 
     var createVersion = (function () {
         function compare(ver1, ver2) {

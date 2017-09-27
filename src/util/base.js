@@ -90,8 +90,8 @@ define(function () {
             return target;
         }
         Object.keys(source).forEach(function (key) {
-            if ((exports.isObject(source[key]) || Array.isArray(source[key]))) {
-                if (exports.isObject(source[key]) && !exports.isObject(target[key])) {
+            if ((base.isObject(source[key]) || Array.isArray(source[key]))) {
+                if (base.isObject(source[key]) && !base.isObject(target[key])) {
                     target[key] = {};
                 }
                 if (Array.isArray(source[key]) && !Array.isArray(target[key])) {
@@ -122,6 +122,9 @@ define(function () {
     base.isScale = function () {
         var flag = false;
         var domEle = document.querySelector('meta[name=viewport]');
+        if (!domEle) {
+            return flag;
+        }
         var viewPortContent = domEle.getAttribute('content');
         var viewPortArr = viewPortContent.split(', ');
         var obj = {};

@@ -5,7 +5,7 @@
 define(function (require) {
     'use strict';
 
-    var utilArray = require('util/array');
+    var utilArray = require('./array');
 
     var fun = {};
 

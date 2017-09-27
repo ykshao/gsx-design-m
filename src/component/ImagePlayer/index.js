@@ -26,21 +26,21 @@ define(function (require) {
         options = options || {};
         titleArray = titleArray || [];
         this._container = $('<div data-scroll-wrap="1"></div>').css({
-            'position': 'fixed',
-            'top': 0,
-            'left': 0,
-            'z-index': 9999,
-            'width': '100%',
-            'height': '100%',
-            'overflow': 'hidden'
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            zIndex: 9999,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
         });
 
         this._playerWrap = $('<div></div>').css({
-            'position': 'relative',
-            'z-index': 0,
-            'width': '100%',
-            'height': '100%',
-            'overflow': 'hidden'
+            position: 'relative',
+            zIndex: 0,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
         }).appendTo(this._container);
 
 
@@ -51,22 +51,21 @@ define(function (require) {
         this._mask.bindTo('display', this);
 
         var countsWrap = $('<div></div>').css({
-            'position': 'absolute',
-            'bottom': 10 * deviceRetio + 'px',
-            'left': 10 * deviceRetio + 'px',
-            'right': 0,
-            'text-align': 'left',
-            'z-index': 1
+            position: 'absolute',
+            bottom: 10 * deviceRetio + 'px',
+            left: 10 * deviceRetio + 'px',
+            right: 0,
+            textAlign: 'left',
+            zIndex: 1
         }).appendTo(this._container);
 
         var counts = $('<span></span>').css({
-            'border-radius': 9 * deviceRetio + 'px',
-            'line-height': 18 * deviceRetio + 'px',
-            'padding': '0 ' + 6 * deviceRetio + 'px',
-            'font-size': 11 * deviceRetio + 'px',
-            'display': 'inline-block',
-            //'background-color': 'rgba(102,102,102,.6)',
-            'color': '#f1f1f1'
+            borderRadius: 9 * deviceRetio + 'px',
+            lineHeight: 18 * deviceRetio + 'px',
+            padding: '0 ' + 6 * deviceRetio + 'px',
+            fontSize: 11 * deviceRetio + 'px',
+            display: 'inline-block',
+            color: '#f1f1f1'
         }).appendTo(countsWrap);
 
 
@@ -172,21 +171,21 @@ define(function (require) {
         var n = images.length;
 
         var $scroller = $('<div></div>').css({
-            'position': 'absolute',
-            'left': 0,
-            'top': 0,
-            'width': (n * 100) + '%',
-            'height': '100%'
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: (n * 100) + '%',
+            height: '100%'
         }).appendTo(instance._playerWrap);
 
         var $ul = $('<ul></ul>').appendTo($scroller);
 
         $ul.css({
-            'position': 'relative',
-            'height': '100%',
-            'margin': 0,
-            'padding': 0,
-            'list-style': 'none'
+            position: 'relative',
+            height: '100%',
+            margin: 0,
+            padding: 0,
+            listStyle: 'none'
         });
 
         var items = [];
@@ -254,11 +253,10 @@ define(function (require) {
     function Item(container, imageUrl) {
         this._container = container;
         this._wrap = $('<div data-image-wrap="center"></div>').css({
-            'position': 'relative',
-            'width': '100%',
-            'height': '100%',
-            'overflow': 'auto'
-            // 'overflow': 'hidden'
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto'
         }).appendTo(container);
 
         this._loading = $('<span class="ui-loading white">' +
@@ -267,10 +265,10 @@ define(function (require) {
             '<i class="t3"></i>' +
             '</span>')
             .css({
-                'position': 'absolute',
-                'margin': -10 * deviceRetio + 'px 0 0 ' + -10 * deviceRetio + 'px',
-                'left': '50%',
-                'top': '50%',
+                position: 'absolute',
+                margin: -10 * deviceRetio + 'px 0 0 ' + -10 * deviceRetio + 'px',
+                left: '50%',
+                top: '50%',
             })
             .appendTo(this._wrap);
 

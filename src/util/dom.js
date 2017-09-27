@@ -4,10 +4,10 @@
 define(function (require) {
     'use strict';
 
-    var utilBase = require('util/base');
-    var utilFunction = require('util/function');
+    var utilBase = require('./base');
+    var utilFunction = require('./function');
 
-    var env = require('util/env');
+    var env = require('./env');
 
     var dom = {};
 
