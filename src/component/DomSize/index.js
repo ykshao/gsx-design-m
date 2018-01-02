@@ -1,5 +1,5 @@
 /**
- * Created by xuzheng on 15/4/22.
+ * Created by gsx on 15/4/22.
  */
 define(function (require) {
     var observer = require('../../util/mvc/observer');
