@@ -9,10 +9,9 @@ define(function (require, exports) {
     var observer = require('../util/mvc/observer');
     var MVCArray = require('../util/mvc/MVCArray');
 
-    var util_base = require('../util/base');
+    var utilBase = require('../util/base');
 
     var initQueue = function (mvcQueue) {
-
         var currentDialog = null;
 
         function setCurrentDialog(dialog) {
@@ -124,7 +123,7 @@ define(function (require, exports) {
         var content;
         var forceShow = false;
 
-        if (util_base.isObject(options)) {
+        if (utilBase.isObject(options)) {
             if ('content' in options) {
                 data['content'] = options.content;
             }
@@ -139,7 +138,7 @@ define(function (require, exports) {
             data['content'] = options;
         }
 
-        if (util_base.isString(data['content']) || util_base.isNumber(data['content'])) {
+        if (utilBase.isString(data['content']) || utilBase.isNumber(data['content'])) {
             var tempContent = $('<div style="text-align: center;">' + data['content'] + '</div>');
             if (tempContent.children().length == 0) {
                 data['content'] = tempContent.get(0);
@@ -232,7 +231,7 @@ define(function (require, exports) {
         var content;
         var forceShow = false;
 
-        if (util_base.isObject(options)) {
+        if (utilBase.isObject(options)) {
             if ('content' in options) {
                 data['content'] = options.content;
             }
@@ -250,7 +249,7 @@ define(function (require, exports) {
             data['content'] = options;
         }
 
-        if (util_base.isString(data['content']) || util_base.isNumber(data['content'])) {
+        if (utilBase.isString(data['content']) || utilBase.isNumber(data['content'])) {
             var tempContent = $('<div style="text-align: center;">' + data['content'] + '</div>');
             if (tempContent.children().length == 0) {
                 data['content'] = tempContent.get(0);

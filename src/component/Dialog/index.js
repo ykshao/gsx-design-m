@@ -16,8 +16,8 @@ define(function (require) {
     var BasePopupDiv = require('../BasePopupDiv/index');
     var PageMask = require('../PageMask/index');
     
-    var cssDialog = require('text!./Dialog.styl');
-    var htmlDialog = require('text!./Dialog.tpl');
+    var cssDialog = require('text!./index.styl');
+    var htmlDialog = require('text!./index.tpl');
 
     var arrDialogs = new MVCArray();
 

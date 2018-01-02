@@ -4,7 +4,7 @@
 define(function (require) {
     'use strict';
 
-    var utilString = require('util/string');
+    var utilString = require('../string');
 
     function invalidSetError(property, value) {
         throw new Error('Invalid value or type for property ' + ('<' + (property + ('>' + (' ：' + value)))));

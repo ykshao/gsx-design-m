@@ -37,11 +37,11 @@ define(function (require) {
 
             //console.log('scrollTop: ' + scrollTop + 'navBarTop: ' + navBarTop);
             var toTopHeight = navBarTop;
-            if(hasAds){
+            if (hasAds) {
                 toTopHeight = navBarTop + 50;
             }
             var fixNoTab = $('.fix-no-tab');
-            if(isFixed && (scrollTop) > toTopHeight) {
+            if (isFixed && (scrollTop) > toTopHeight) {
                 fixNoTab
                     .show()
                     .css('visibility', 'hidden');

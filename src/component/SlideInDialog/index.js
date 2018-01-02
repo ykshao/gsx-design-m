@@ -15,7 +15,7 @@ define(function (require) {
     var lastShowTime = 0;
 
 
-    var cssSlideInDialog = require('text!./SlideInDialog.styl');
+    var cssSlideInDialog = require('text!./index.styl');
     var htmlSlideInDialog = '' + '<div class="slide-dialog-mask">' + '<div class="slide-dialog-content"></div>' + '</div><div class="slide-mask-div"></div>';
     var arrDialogs = new MVCArray();
     var $body = $('body');

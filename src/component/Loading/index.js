@@ -5,6 +5,7 @@
  */
 define(function (require) {
     var $ = require('zepto');
+    require('css-loader!./index.styl');
     /**
      * 显示
      * @param  {?Object} options 参数设置

@@ -7,7 +7,7 @@ define(function (require, exports) {
 
     var $ = require('zepto');
     var template = require('artTemplate');
-    var weixinRender = template.compile(require('text!./weixinMask.tpl'));
+    var weixinRender = template.compile(require('text!./index.tpl'));
     var container = $('#page_main');
     var flagArray = ['share', 'open'];
 
