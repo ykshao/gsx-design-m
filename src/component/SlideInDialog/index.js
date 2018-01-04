@@ -16,7 +16,11 @@ define(function (require) {
 
 
     var cssSlideInDialog = require('text!./index.styl');
-    var htmlSlideInDialog = '' + '<div class="slide-dialog-mask">' + '<div class="slide-dialog-content"></div>' + '</div><div class="slide-mask-div"></div>';
+    var htmlSlideInDialog = ''
+        + '<div class="slide-dialog-mask">'
+        +   '<div class="slide-dialog-content"></div>'
+        + '</div>'
+        + '<div class="slide-mask-div"></div>';
     var arrDialogs = new MVCArray();
     var $body = $('body');
     var $html = $('html');

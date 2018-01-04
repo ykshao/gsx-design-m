@@ -145,7 +145,7 @@ define(function (require, exports) {
             }
         }
 
-        require(['./Dialog/Dialog'], function (Dialog) {
+        require(['./Dialog/index'], function (Dialog) {
             var dialog = new Dialog(data);
             rst.dialog = dialog;
 
@@ -256,7 +256,7 @@ define(function (require, exports) {
             }
         }
 
-        require(['./Dialog/Dialog'], function (Dialog) {
+        require(['./Dialog/index'], function (Dialog) {
             var dialog = new Dialog(data);
             rst.dialog = dialog;
 
