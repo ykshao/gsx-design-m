@@ -300,7 +300,7 @@ define(function (require, exports) {
 
         var showTime = 1500;
 
-        require(['./TextTip/TextTip'], function (TextTip) {
+        require(['./TextTip/index'], function (TextTip) {
             var textTip = new TextTip({
                 text: text
             });
