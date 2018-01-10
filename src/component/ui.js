@@ -2,7 +2,6 @@
  * Created by gsx.
  */
 define(function (require, exports) {
-
     'use strict';
 
     var $ = require('zepto');
@@ -227,31 +226,30 @@ define(function (require, exports) {
             ]
         };
 
-        var content;
         var forceShow = false;
 
         if (utilBase.isObject(options)) {
-            if ('content' in options) {
-                data['content'] = options.content;
+            if (options.content) {
+                data.content = options.content;
             }
-            if ('title' in options) {
-                data['title'] = options.title + '';
+            if (options.title) {
+                data.title = options.title + '';
             }
-            if ('button_ok' in options) {
-                data['buttons'][1]['content'] = options.button_ok + '';
+            if (options.button_ok) {
+                data.buttons[1].content = options.button_ok + '';
             }
-            if ('button_cancel' in options) {
-                data['buttons'][0]['content'] = options.button_cancel + '';
+            if (options.button_cancel) {
+                data.buttons[0].content = options.button_cancel + '';
             }
             forceShow = !!options.forceShow;
         } else if (arguments.length > 0) {
-            data['content'] = options;
+            data.content = options;
         }
-
-        if (utilBase.isString(data['content']) || utilBase.isNumber(data['content'])) {
-            var tempContent = $('<div style="text-align: center;">' + data['content'] + '</div>');
-            if (tempContent.children().length == 0) {
-                data['content'] = tempContent.get(0);
+        var content = data.content;
+        if (utilBase.isString(content) || utilBase.isNumber(content)) {
+            var tempContent = $('<div style="text-align: center;">' + content + '</div>');
+            if (tempContent.children().length === 0) {
+                data.content = tempContent.get(0);
             }
         }
 
