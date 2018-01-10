@@ -120,28 +120,27 @@ define(function (require, exports) {
             ]
         };
 
-        var content;
         var forceShow = false;
 
         if (utilBase.isObject(options)) {
-            if ('content' in options) {
-                data['content'] = options.content;
+            if (options.content) {
+                data.content = options.content;
             }
-            if ('title' in options) {
-                data['title'] = options.title + '';
+            if (options.title) {
+                data.title = options.title + '';
             }
-            if ('button' in options) {
-                data['buttons'][0]['content'] = options.button + '';
+            if (options.button) {
+                data.buttons[0].content = options.button + '';
             }
             forceShow = !!options.forceShow;
         } else if (arguments.length > 0) {
-            data['content'] = options;
+            data.content = options;
         }
 
-        if (utilBase.isString(data['content']) || utilBase.isNumber(data['content'])) {
-            var tempContent = $('<div style="text-align: center;">' + data['content'] + '</div>');
-            if (tempContent.children().length == 0) {
-                data['content'] = tempContent.get(0);
+        if (utilBase.isString(data.content) || utilBase.isNumber(data.content)) {
+            var tempContent = $('<div style="text-align: center;">' + data.content + '</div>');
+            if (tempContent.children().length === 0) {
+                data.content = tempContent.get(0);
             }
         }
 
@@ -277,6 +276,61 @@ define(function (require, exports) {
                 dialogQueue.insertAt(0, dialog);
             } else {
                 dialogQueue.push(dialog);
+            }
+        });
+
+        return rst;
+    };
+
+    /**
+     * 文字浮层提示
+     * 说明：
+     *  1. 提示文字显示出1500ms后会自动隐藏
+     *  2. 所有提示会自动进入tipQueue显示队列自动控制显示时机，如需特殊处理请调用TextTip自行实现
+     *
+     * 示例：
+     * ui.toast('提示内容').done(function(){
+     *      //提示完成
+     * });
+     *
+     * @param {string} text 文字内容
+     * return {$.Deferred}
+     *
+     * */
+    exports.toast = function (text) {
+        var rst = $.Deferred();
+
+        var showTime = 1500;
+
+        require(['common/ui/TextTip/TextTip'], function (TextTip) {
+            var textTip = new TextTip({
+                text: text
+            });
+
+            var listener = observer.addListener(textTip, 'display_changed', function () {
+                var display = textTip.get('display');
+                if (!display) {
+                    observer.removeListener(listener);
+                    listener = null;
+                    tipQueue.remove(textTip);
+                    rst.resolve();
+                    setTimeout(function () {
+                        textTip.destroy();
+                        textTip.ui_timer = null;
+                        textTip = null;
+                        rst = null;
+                    });
+                } else {
+                    textTip.ui_timer = setTimeout(function () {
+                        textTip.hide();
+                    }, showTime);
+                }
+            });
+            tipQueue.push(textTip);
+            var currentTip = tipQueue.getAt(0);
+            if (currentTip !== textTip) {
+                clearTimeout(currentTip.ui_timer);
+                currentTip.hide(true);
             }
         });
 
